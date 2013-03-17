@@ -103,16 +103,20 @@
 			</div>
 		</div>
 		<!--/BOTTOM LINE-->
-		
 		<script type="text/javascript">
-			var pkBaseURL = (("https:" == document.location.protocol) ? "https://analytics.nxfifteen.me.uk/" : "http://analytics.nxfifteen.me.uk/");
-			document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-		</script><script type="text/javascript">
-		try {
-			var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 5);
-			piwikTracker.trackPageView();
-			piwikTracker.enableLinkTracking();
-		} catch( err ) {}
-		</script><noscript><p><img src="http://analytics.nxfifteen.me.uk/piwik.php?idsite=5" style="border:0" alt="" /></p></noscript>
+		  var _paq = _paq || [];
+		  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+		  _paq.push(["setDomains", ["*.*.nx15.at"]]);
+		  _paq.push(["trackPageView"]);
+		  _paq.push(["enableLinkTracking"]);
+		
+		  (function() {
+		    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://analytics.nxfifteen.me.uk/";
+		    _paq.push(["setTrackerUrl", u+"piwik.php"]);
+		    _paq.push(["setSiteId", "5"]);
+		    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+		    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+		  })();
+		</script><noscript><img src="https://analytics.nxfifteen.me.uk/piwik.php?idsite=5&amp;rec=1" style="border:0" alt="" /></noscript>
 	</body>
 </html>
