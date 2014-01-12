@@ -270,7 +270,13 @@ $license = str_replace('{{yourname}}', $yourname, $license);
 $license = str_replace('{{year}}', $year, $license);
 $license = str_replace('{{primaryurl}}', $primaryurl, $license);
 $license = str_replace('{{licensename}}', file_get_contents("licenses/$oslicense.ini"), $license);
-if ($format == 'html') { $license = str_replace('{{gravatar}}', $gravatar . "&nbsp;", $license); } else { $license = str_replace('{{gravatar}}', "", $license); }
+if ($format == 'html' AND $gravatar != "") {
+  $license = str_replace('{{gravatar}}', "<a href=\"$url\">$gravatar</a>&nbsp;", $license);
+} elseif ($format == 'html' AND $gravatar == "") {
+  $license = str_replace('{{gravatar}}', "&nbsp;", $license);
+} else {
+  $license = str_replace('{{gravatar}}', "", $license);
+}
 
 // if we want text format, strip out the license from the article tag
 // and then strip any other tags in the license.
@@ -279,6 +285,7 @@ if ($format == 'txt') {
   $license = preg_replace('/<[^>]*>/', '', trim($license));
   $license = html_entity_decode($license);
   $license = str_replace("  ", "", $license);
+  $license = str_replace("\n\n\n", "\n", $license);
   header('content-type: text/plain; charset=UTF-8');
 } elseif ($format == 'md') {
   $license = preg_replace('/<[^>]*>/', '', trim($license));
