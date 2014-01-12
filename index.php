@@ -285,9 +285,9 @@ if ($format == 'txt') {
 }
 
 if ($downloadFile) {
-  //header("Content-Description: File Transfer");
-  //header("Content-Type: text/plain; charset=UTF-8");
-  //header("Content-Disposition: attachment; filename=\"LICENSE.$format\"");
+  header("Content-Description: File Transfer");
+  header("Content-Type: text/plain; charset=UTF-8");
+  header("Content-Disposition: attachment; filename=\"LICENSE.$format\"");
   if ($sha == "") {
     exec("git rev-parse --short HEAD", $out, $r);
     if ($r == 0) {
