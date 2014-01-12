@@ -142,7 +142,7 @@ if ($cname && file_exists($user_file)) {
 /**
  * Now process the request url. Optional parts of the url are (in order):
  * [sha]/[year|year-range]/license.[format]
- * eg. http://stuart.nx15.at/a526bf7ad1/2009-2010/license.txt
+ * eg. http://stuart.nx15.at/a526bf7ad1/mit/2009-2010/license.txt
  **/
 
 // grab sha from request uri
@@ -195,6 +195,10 @@ if (count($match) > 1) {
 
 if (file_exists('licenses/' . $request . '.html')) {
   $oslicense = "$request";
+  $request = array_pop($request_uri);
+} elseif ($request == 'freebsd') {
+  $oslicense = "LICENSE";
+  $request = array_pop($request_uri);
 } else {
   $oslicense = "LICENSE";
 }
@@ -226,15 +230,16 @@ if ($format == 'md') {
   // if sha specified, use that revision of licence
   if ($sha != "") {
     $out = array();
-    // preg_replace should save us - but: please help me Obi Wan...
     exec("git show " . $sha . ":themes/html.header.html", $out, $r);
     if ($r == 0) {
       $license  = implode("\n", $out);
     } 
+    $out = array();
     exec("git show " . $sha . ":licenses/$oslicense.html", $out, $r);
     if ($r == 0) {
       $license .= implode("\n", $out);
     } 
+    $out = array();
     exec("git show " . $sha . ":themes/html.footer.html", $out, $r);
     if ($r == 0) {
       $license .= implode("\n", $out);
@@ -264,6 +269,7 @@ $license = str_replace('{{boilerplate}}', $boilerplate, $license);
 $license = str_replace('{{yourname}}', $yourname, $license);
 $license = str_replace('{{year}}', $year, $license);
 $license = str_replace('{{primaryurl}}', $primaryurl, $license);
+$license = str_replace('{{licensename}}', $oslicense, $license);
 if ($format == 'html') { $license = str_replace('{{gravatar}}', $gravatar . "&nbsp;", $license); } else { $license = str_replace('{{gravatar}}', "", $license); }
 
 // if we want text format, strip out the license from the article tag
@@ -279,10 +285,21 @@ if ($format == 'txt') {
 }
 
 if ($downloadFile) {
-  header("Content-Description: File Transfer");
-  header("Content-Type: text/plain; charset=UTF-8");
-  header("Content-Disposition: attachment; filename=\"LICENSE.$format\"");
+  //header("Content-Description: File Transfer");
+  //header("Content-Type: text/plain; charset=UTF-8");
+  //header("Content-Disposition: attachment; filename=\"LICENSE.$format\"");
+  if ($sha == "") {
+    exec("git rev-parse --short HEAD", $out, $r);
+    if ($r == 0) {
+      $sha = implode("\n", $out);
+    } 
+  }
+  if ($oslicense != "LICENSE") { $oslicense = $oslicense . "/"; } else { $oslicense = ""; }
+  $licence_url = "http://" . $_SERVER['HTTP_HOST'] . "/" . $sha . "/" . $oslicense . $year . "/license.html";
+
+  $license = str_replace('{{src}}', "This license is available online at [". $licence_url ."](". $licence_url .")" . "\n", $license);
   echo $license;
 } else {
+  $license = str_replace('{{src}}', "", $license);
   echo $license;
 }
