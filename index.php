@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $cname) {
 if ($cname && file_exists($user_file)) {
   $user = json_decode(file_get_contents($user_file));
   
-  $holder = htmlentities($user->yourname, ENT_COMPAT | ENT_HTML401, 'UTF-8');
+  $holder = htmlentities($user->yourname, ENT_COMPAT, 'UTF-8');
   
   if (property_exists($user, 'yourname') AND property_exists($user, 'url') AND property_exists($user, 'company') AND property_exists($user, 'companyurl')) {
         $copyright = '<a href="' . $user->url . '">' . $user->yourname . '</a> of <a href="' . $user->companyurl . '">' . $user->company . '</a>';
@@ -174,7 +174,7 @@ $license = '';
 if ($sha != "") {
   $out = array();
   // preg_replace should save us - but: please help me Obi Wan...
-  exec("/usr/local/bin/git show " . $sha . ":LICENSE.html", $out, $r);
+  exec("/usr/bin/git show " . $sha . ":LICENSE.html", $out, $r);
   if ($r == 0) {
     $license = implode("\n", $out);
   } 
