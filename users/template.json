@@ -1,0 +1,14 @@
+{
+  "yourname": "Your Name",
+  "url": "Your URL",
+  "company": "Your Company",
+  "companyurl": "Company URL",
+  "theme": "default",
+  "format": "html",
+  "email": "Your Email",
+  "gravatar": true,
+  "pgpkey": "Your PGP Key",
+  "pgpid": "Your PGP ID",
+  "pgpurl": "Your PGP URL",
+  "boilerplate": "Some Boiler Plate"  
+}
