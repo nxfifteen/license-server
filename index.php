@@ -124,7 +124,7 @@ if ($cname && file_exists($user_file)) {
 /**
  * Now process the request url. Optional parts of the url are (in order):
  * [sha]/[year|year-range]/license.[format]
- * eg. http://rem.mit-license.org/a526bf7ad1/2009-2010/license.txt
+ * eg. http://stuart.nx15.at/a526bf7ad1/2009-2010/license.txt
  **/
 
 // grab sha from request uri
@@ -136,7 +136,13 @@ if ($request == '') $request = array_pop($request_uri);
 
 // url file format overrides user preference
 if (stripos($request, 'license') === 0) {
-  $format = array_pop(explode('.', strtolower($request))) == 'txt' ? 'txt' : 'html';
+  if (array_pop(explode('.', strtolower($request))) == 'txt' OR
+      array_pop(explode('.', strtolower($request))) == 'html' OR
+      array_pop(explode('.', strtolower($request))) == 'md') {
+    $format = array_pop(explode('.', strtolower($request)));
+  } else {
+    $format = 'html';
+  }
 
   // move down to the next part of the request
   $request = array_pop($request_uri);
