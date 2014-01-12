@@ -10,5 +10,6 @@
   "pgpkey": "Your PGP Key",
   "pgpid": "Your PGP ID",
   "pgpurl": "Your PGP URL",
-  "boilerplate": "Some Boiler Plate"  
+  "boilerplate": "Some Boiler Plate",
+  "oslicense": "freebsd"
 }

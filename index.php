@@ -5,6 +5,7 @@ date_default_timezone_set('Europe/London'); // stop php from whining
 $downloadFile = false;
 $format = 'html';
 $cname = '';
+$oslicense = "";
 
 $theme = 'default';
 //$theme = 'double-windsor';
@@ -113,6 +114,10 @@ if ($cname && file_exists($user_file)) {
     $pgpurl = $user->pgpurl;
   }
   
+  if (property_exists($user, 'oslicense')) {
+    $oslicense = $user->oslicense;
+  }
+  
   if(property_exists($user, 'gravatar') && $user->gravatar === true){
     $gravatar = '<img id="gravatar" src="http://www.gravatar.com/avatar/' . md5(strtolower(trim($user->email))) . '" />';
   }
@@ -157,18 +162,22 @@ if (stripos($request, 'license') === 0) {
     $format = 'html';
   }
 
+  $downloadFile = false;
+
   // move down to the next part of the request
   $request = array_pop($request_uri);
+
 } elseif (stripos($request, 'download') === 0) {
   if (array_pop(explode('.', strtolower($request))) == 'txt' OR
       array_pop(explode('.', strtolower($request))) == 'md') {
     $format = array_pop(explode('.', strtolower($request)));
   }
 
+  $downloadFile = true;
+
   // move down to the next part of the request
   $request = array_pop($request_uri);
 
-  $downloadFile = true;
 }
 
 // check if we have a year or a year range up front
@@ -184,6 +193,12 @@ if (count($match) > 1) {
   $request = array_pop($request_uri);
 }
 
+if (file_exists('licenses/' . $request . '.html')) {
+  $oslicense = "$request";
+} else {
+  $oslicense = "LICENSE";
+}
+
 // check if there's a SHA on the url and read this to switch license versions
 $sha = '';
 if ($request != "" && $request != "/" && $request != "/index.php") {
@@ -192,37 +207,34 @@ if ($request != "" && $request != "/" && $request != "/index.php") {
   $sha = preg_replace('/[^a-f0-9]/', '', $user->version);
 }
 
+$license = '';
 if ($format == 'md') {
   // if sha specified, use that revision of licence
-  $license = '';
   if ($sha != "") {
     $out = array();
     // preg_replace should save us - but: please help me Obi Wan...
-    exec("git show " . $sha . ":licenses/LICENSE.md", $out, $r);
+    exec("git show " . $sha . ":licenses/$oslicense.md", $out, $r);
     if ($r == 0) {
       $license = implode("\n", $out);
     } 
   }
-
   // if we didn't manage to read one in, use latest
   if ($license == "") {
-    $license = file_get_contents('licenses/LICENSE.md');
+    $license = file_get_contents("licenses/$oslicense.md");
   }
 } else {
   // if sha specified, use that revision of licence
-  $license = '';
   if ($sha != "") {
     $out = array();
     // preg_replace should save us - but: please help me Obi Wan...
-    exec("git show " . $sha . ":licenses/LICENSE.html", $out, $r);
+    exec("git show " . $sha . ":licenses/$oslicense.html", $out, $r);
     if ($r == 0) {
       $license = implode("\n", $out);
     } 
   }
-
   // if we didn't manage to read one in, use latest
   if ($license == "") {
-    $license = file_get_contents('licenses/LICENSE.html');
+    $license = file_get_contents("licenses/$oslicense.html");
   }
 }
 
@@ -252,6 +264,8 @@ if ($format == 'txt') {
   $license = html_entity_decode($license);
   $license = str_replace("  ", "", $license);
   header('content-type: text/plain; charset=UTF-8');
+} elseif ($format == 'md') {
+  $license = preg_replace('/<[^>]*>/', '', trim($license));
 }
 
 if ($downloadFile) {

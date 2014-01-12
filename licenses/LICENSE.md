@@ -15,7 +15,7 @@ Redistribution and use in source and binary forms, with or without modification,
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-The views and conclusions contained in the software and documentation are those of the authors and should not be interpreted as representing official policies, either expressed or implied, of The NxFifteen Research Group , The Software Society or any of the original authors other employers - past or present.
+{{boilerplate}}
 
 OpenPGP Key ID: [{{pgpid}}]({{pgpurl}}) - FingerPrint: {{pgpkey}}
 
