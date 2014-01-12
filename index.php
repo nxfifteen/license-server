@@ -278,5 +278,7 @@ if ($downloadFile) {
   echo $license;
 } else {
   $license = str_replace('{{src}}', "", $license);
+  if ($oslicense == "LICENSE") { $oslicense = "freebsd"; }
+  $license = str_replace('{{piwik}}', $yourname . "/" . $oslicense . "/" . $year . "/" . $sha, $license);
   echo $license;
 }
