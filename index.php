@@ -100,6 +100,9 @@ if ($cname && file_exists($user_file)) {
     $pgpid = $user->pgpid;
   }
   
+  if(property_exists($user, 'gravatar') && $user->gravatar === true){
+    $gravatar = '<img id="gravatar" src="http://www.gravatar.com/avatar/' . md5(strtolower(trim($user->email))) . '" />';
+  }
 } else {
   $holder = "&lt;copyright holders&gt;";
 }
@@ -174,6 +177,7 @@ $license = str_replace('{{copyright}}', $copyright, $license);
 $license = str_replace('{{boilerplate}}', $boilerplate, $license);
 $license = str_replace('{{yourname}}', $yourname, $license);
 $license = str_replace('{{year}}', $year, $license);
+if ($format != 'txt') { $license = str_replace('{{gravatar}}', $gravatar . "&nbsp;", $license); } else { $license = str_replace('{{gravatar}}', "", $license); }
 
 // if we want text format, strip out the license from the article tag
 // and then strip any other tags in the license.
