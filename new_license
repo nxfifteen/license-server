@@ -2,4 +2,4 @@
 LICENSE="$1"
 cp "licenses/LICENSE.ini" "licenses/$LICENSE.ini"
 cp "licenses/LICENSE.html" "licenses/$LICENSE.html"
-cp "licenses/LICENSE.ms" "licenses/$LICENSE.md"
+cp "licenses/LICENSE.md" "licenses/$LICENSE.md"
