@@ -36,10 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $cname) {
     echo '>>> MIT license page created: http://' . $_SERVER['HTTP_HOST'] . "\n\n";
 
     // try to add to github...!
-    //exec('cd /WWW/mit-license && /usr/bin/git add ' . $user_file . ' && /usr/bin/git commit -m"automated creation of ' . $user_file . '"', $out, $r);
+    //exec('cd /WWW/mit-license && git add ' . $user_file . ' && git commit -m"automated creation of ' . $user_file . '"', $out, $r);
     //print_r($out); echo "\n"; print_r($r); echo "\n";
     //$out = array();
-    //exec('cd /WWW/mit-license && /usr/bin/git push origin develop -v 2>&1', $out, $r);
+    //exec('cd /WWW/mit-license && git push origin develop -v 2>&1', $out, $r);
     //print_r($out); echo "\n"; print_r($r); echo "\n";
 
   } catch (Exception $e) {
@@ -174,7 +174,7 @@ $license = '';
 if ($sha != "") {
   $out = array();
   // preg_replace should save us - but: please help me Obi Wan...
-  exec("/usr/bin/git show " . $sha . ":LICENSE.html", $out, $r);
+  exec("git show " . $sha . ":LICENSE.html", $out, $r);
   if ($r == 0) {
     $license = implode("\n", $out);
   } 
