@@ -2,6 +2,7 @@
 
 date_default_timezone_set('Europe/London'); // stop php from whining
 
+$downloadFile = false;
 $format = 'html';
 $cname = '';
 
@@ -78,12 +79,22 @@ if ($cname && file_exists($user_file)) {
     $yourname = $user->yourname;
   }
   
+  if (property_exists($user, 'company')) {
+    $company = $user->company;
+  }
+  
   if (property_exists($user, 'url')) {
-    $url = '<a href="' . $user->url . '">' . $user->url . '</a>';
+    $url = $user->url;
+    $primaryurl = $user->url;
+  }
+  
+  if (property_exists($user, 'companyurl')) {
+    $companyurl = $user->companyurl;
+    $primaryurl = $user->companyurl;
   }
   
   if (property_exists($user, 'email')) {
-    $email = ' <a href="mailto:' . $user->email . '">Email Copyright Holder</a>';
+    $email = $user->email;
   }
   
   if (property_exists($user, 'pgpkey')) {
@@ -94,10 +105,12 @@ if ($cname && file_exists($user_file)) {
     $boilerplate = $user->boilerplate;
   }
   
-  if (property_exists($user, 'pgpid') AND property_exists($user, 'pgpurl')) {
-    $pgpid = '<a href="' . $user->pgpurl . '">' . $user->pgpid . '</a>';
-  } elseif (property_exists($user, 'pgpid') AND !property_exists($user, 'pgpurl')) {
+  if (property_exists($user, 'pgpid')) {
     $pgpid = $user->pgpid;
+  }
+  
+  if (property_exists($user, 'pgpurl')) {
+    $pgpurl = $user->pgpurl;
   }
   
   if(property_exists($user, 'gravatar') && $user->gravatar === true){
@@ -146,6 +159,16 @@ if (stripos($request, 'license') === 0) {
 
   // move down to the next part of the request
   $request = array_pop($request_uri);
+} elseif (stripos($request, 'download') === 0) {
+  if (array_pop(explode('.', strtolower($request))) == 'txt' OR
+      array_pop(explode('.', strtolower($request))) == 'md') {
+    $format = array_pop(explode('.', strtolower($request)));
+  }
+
+  // move down to the next part of the request
+  $request = array_pop($request_uri);
+
+  $downloadFile = true;
 }
 
 // check if we have a year or a year range up front
@@ -169,20 +192,38 @@ if ($request != "" && $request != "/" && $request != "/index.php") {
   $sha = preg_replace('/[^a-f0-9]/', '', $user->version);
 }
 
-// if sha specified, use that revision of licence
-$license = '';
-if ($sha != "") {
-  $out = array();
-  // preg_replace should save us - but: please help me Obi Wan...
-  exec("git show " . $sha . ":licenses/LICENSE.html", $out, $r);
-  if ($r == 0) {
-    $license = implode("\n", $out);
-  } 
-}
+if ($format == 'md') {
+  // if sha specified, use that revision of licence
+  $license = '';
+  if ($sha != "") {
+    $out = array();
+    // preg_replace should save us - but: please help me Obi Wan...
+    exec("git show " . $sha . ":licenses/LICENSE.md", $out, $r);
+    if ($r == 0) {
+      $license = implode("\n", $out);
+    } 
+  }
 
-// if we didn't manage to read one in, use latest
-if ($license == "") {
-  $license = file_get_contents('licenses/LICENSE.html');
+  // if we didn't manage to read one in, use latest
+  if ($license == "") {
+    $license = file_get_contents('licenses/LICENSE.md');
+  }
+} else {
+  // if sha specified, use that revision of licence
+  $license = '';
+  if ($sha != "") {
+    $out = array();
+    // preg_replace should save us - but: please help me Obi Wan...
+    exec("git show " . $sha . ":licenses/LICENSE.html", $out, $r);
+    if ($r == 0) {
+      $license = implode("\n", $out);
+    } 
+  }
+
+  // if we didn't manage to read one in, use latest
+  if ($license == "") {
+    $license = file_get_contents('licenses/LICENSE.html');
+  }
 }
 
 // replace info tag and display
@@ -192,12 +233,16 @@ $license = str_replace('{{theme}}', $theme, $license);
 $license = str_replace('{{email}}', $email, $license);
 $license = str_replace('{{pgpkey}}', $pgpkey, $license);
 $license = str_replace('{{pgpid}}', $pgpid, $license);
+$license = str_replace('{{pgpurl}}', $pgpurl, $license);
+$license = str_replace('{{company}}', $company, $license);
+$license = str_replace('{{companyurl}}', $companyurl, $license);
 $license = str_replace('{{url}}', $url, $license);
 $license = str_replace('{{copyright}}', $copyright, $license);
 $license = str_replace('{{boilerplate}}', $boilerplate, $license);
 $license = str_replace('{{yourname}}', $yourname, $license);
 $license = str_replace('{{year}}', $year, $license);
-if ($format != 'txt') { $license = str_replace('{{gravatar}}', $gravatar . "&nbsp;", $license); } else { $license = str_replace('{{gravatar}}', "", $license); }
+$license = str_replace('{{primaryurl}}', $primaryurl, $license);
+if ($format == 'html') { $license = str_replace('{{gravatar}}', $gravatar . "&nbsp;", $license); } else { $license = str_replace('{{gravatar}}', "", $license); }
 
 // if we want text format, strip out the license from the article tag
 // and then strip any other tags in the license.
@@ -209,4 +254,11 @@ if ($format == 'txt') {
   header('content-type: text/plain; charset=UTF-8');
 }
 
-echo $license;
+if ($downloadFile) {
+  header("Content-Description: File Transfer");
+  header("Content-Type: text/plain; charset=UTF-8");
+  header("Content-Disposition: attachment; filename=\"LICENSE.$format\"");
+  echo $license;
+} else {
+  echo $license;
+}
