@@ -4,6 +4,7 @@
   "company": "NxFifteen Research Group",
   "companyurl": "http://research.nxfifteen.me.uk",
   "theme": "default",
+  "format": "html",
   "email": "stuart@nxfifteen.me.uk",
   "gravatar": true,
   "pgpkey": "299B6F75C137950F031F5DFAD4065F5EA7EEB609",

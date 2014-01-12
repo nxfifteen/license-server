@@ -103,6 +103,14 @@ if ($cname && file_exists($user_file)) {
   if(property_exists($user, 'gravatar') && $user->gravatar === true){
     $gravatar = '<img id="gravatar" src="http://www.gravatar.com/avatar/' . md5(strtolower(trim($user->email))) . '" />';
   }
+
+  if (property_exists($user, 'format')) {
+    if (strtolower($user->format) == 'txt') {
+      $format = 'txt';
+    } elseif (strtolower($user->format) == 'md') {
+      $format = 'md';
+    }
+  }
 } else {
   $holder = "&lt;copyright holders&gt;";
 }
