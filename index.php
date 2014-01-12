@@ -174,7 +174,7 @@ $license = '';
 if ($sha != "") {
   $out = array();
   // preg_replace should save us - but: please help me Obi Wan...
-  exec("git show " . $sha . ":LICENSE.html", $out, $r);
+  exec("git show " . $sha . ":licenses/LICENSE.html", $out, $r);
   if ($r == 0) {
     $license = implode("\n", $out);
   } 
@@ -182,7 +182,7 @@ if ($sha != "") {
 
 // if we didn't manage to read one in, use latest
 if ($license == "") {
-  $license = file_get_contents('LICENSE.html');
+  $license = file_get_contents('licenses/LICENSE.html');
 }
 
 // replace info tag and display
