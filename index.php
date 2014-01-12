@@ -20,36 +20,6 @@ if (count($match) == 2) {
 
 $user_file = 'users/' . $cname . '.json';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $cname) {
-  try {
-    $data = json_decode(file_get_contents('php://input'));
-    if (!property_exists($data, 'copyright')) {
-      Throw new Exception('>>> JSON requires "copyright" property and value');
-    }
-
-    if (file_exists($user_file)) {
-      Throw new Exception(wordwrap('>>> User already exists - to update values, please send a pull request on https://git.research.nxfifteen.me.uk/web-applications/license-server'));
-    }
-
-    if (!file_put_contents($user_file, json_encode($data))) {
-      Throw new Exception(wordwrap('>>> Unable to create new user - please send a pull request on https://git.research.nxfifteen.me.uk/web-applications/license-server'));
-    }
-
-    echo '>>> MIT license page created: http://' . $_SERVER['HTTP_HOST'] . "\n\n";
-
-    // try to add to github...!
-    //exec('cd /WWW/mit-license && git add ' . $user_file . ' && git commit -m"automated creation of ' . $user_file . '"', $out, $r);
-    //print_r($out); echo "\n"; print_r($r); echo "\n";
-    //$out = array();
-    //exec('cd /WWW/mit-license && git push origin develop -v 2>&1', $out, $r);
-    //print_r($out); echo "\n"; print_r($r); echo "\n";
-
-  } catch (Exception $e) {
-    echo $e->getMessage() . "\n\n";
-  }
-  exit;
-}
-
 /**
  * Load up the user.json file and read properties in
  **/
