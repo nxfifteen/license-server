@@ -111,6 +111,12 @@ if ($cname && file_exists($user_file)) {
       $format = 'md';
     }
   }
+
+  if (property_exists($user, 'theme')) {
+    if (file_exists('themes/' . $user->theme . '.css')) {
+      $theme = $user->theme;
+    }
+  }
 } else {
   $holder = "&lt;copyright holders&gt;";
 }
