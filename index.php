@@ -227,14 +227,24 @@ if ($format == 'md') {
   if ($sha != "") {
     $out = array();
     // preg_replace should save us - but: please help me Obi Wan...
+    exec("git show " . $sha . ":themes/html.header.html", $out, $r);
+    if ($r == 0) {
+      $license  = implode("\n", $out);
+    } 
     exec("git show " . $sha . ":licenses/$oslicense.html", $out, $r);
     if ($r == 0) {
-      $license = implode("\n", $out);
+      $license .= implode("\n", $out);
+    } 
+    exec("git show " . $sha . ":themes/html.footer.html", $out, $r);
+    if ($r == 0) {
+      $license .= implode("\n", $out);
     } 
   }
   // if we didn't manage to read one in, use latest
   if ($license == "") {
-    $license = file_get_contents("licenses/$oslicense.html");
+    $license  = file_get_contents("themes/html.header.html");
+    $license .= file_get_contents("licenses/$oslicense.html");
+    $license .= file_get_contents("themes/html.footer.html");
   }
 }
 
