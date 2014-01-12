@@ -3,11 +3,14 @@
 date_default_timezone_set('Europe/London'); // stop php from whining
 
 $format = 'html';
-$theme = 'default';
 $cname = '';
 
+$theme = 'default';
+//$theme = 'double-windsor';
+
 // use a match instead of preg_replace to ensure we got the cname
-preg_match('/^([a-z0-9\-]+)\.nx15\.at$/', $_SERVER['HTTP_HOST'], $match);
+$domain = explode(".", $_SERVER['HTTP_HOST']);
+preg_match('/^([a-z0-9\-]+)$/', $domain[0], $match);
 
 if (count($match) == 2) {
   $cname = $match[1];
@@ -23,11 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $cname) {
     }
 
     if (file_exists($user_file)) {
-      Throw new Exception(wordwrap('>>> User already exists - to update values, please send a pull request on https://github.com/remy/mit-license'));
+      Throw new Exception(wordwrap('>>> User already exists - to update values, please send a pull request on https://git.research.nxfifteen.me.uk/web-applications/license-server'));
     }
 
     if (!file_put_contents($user_file, json_encode($data))) {
-      Throw new Exception(wordwrap('>>> Unable to create new user - please send a pull request on https://github.com/remy/mit-license'));
+      Throw new Exception(wordwrap('>>> Unable to create new user - please send a pull request on https://git.research.nxfifteen.me.uk/web-applications/license-server'));
     }
 
     echo '>>> MIT license page created: http://' . $_SERVER['HTTP_HOST'] . "\n\n";
