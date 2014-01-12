@@ -269,7 +269,7 @@ $license = str_replace('{{boilerplate}}', $boilerplate, $license);
 $license = str_replace('{{yourname}}', $yourname, $license);
 $license = str_replace('{{year}}', $year, $license);
 $license = str_replace('{{primaryurl}}', $primaryurl, $license);
-$license = str_replace('{{licensename}}', $oslicense, $license);
+$license = str_replace('{{licensename}}', file_get_contents("licenses/$oslicense.ini"), $license);
 if ($format == 'html') { $license = str_replace('{{gravatar}}', $gravatar . "&nbsp;", $license); } else { $license = str_replace('{{gravatar}}', "", $license); }
 
 // if we want text format, strip out the license from the article tag
