@@ -4,3 +4,4 @@
 # Desktop preferences
 .Desktop
 .DS_Store
+.gitlab_test.ini
