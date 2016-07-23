@@ -11,13 +11,13 @@ $theme = 'default';
 //$theme = 'double-windsor';
 
 // use a match instead of preg_replace to ensure we got the cname
-$domain = explode(".", $_SERVER['HTTP_HOST']);
-preg_match('/^([a-z0-9\-]+)$/', $domain[0], $match);
-
-if (count($match) == 2) {
-  $cname = $match[1];
-}
-
+//$domain = explode(".", $_SERVER['HTTP_HOST']);
+//preg_match('/^([a-z0-9\-]+)$/', $domain[0], $match);
+//
+//if (count($match) == 2) {
+//  $cname = $match[1];
+//}
+$cname = "stuart";
 $user_file = 'users/' . $cname . '.json';
 
 /**
@@ -112,11 +112,12 @@ if ($cname && file_exists($user_file)) {
 /**
  * Now process the request url. Optional parts of the url are (in order):
  * [sha]/[year|year-range]/license.[format]
- * eg. http://stuart.nx15.at/a526bf7ad1/mit/2009-2010/license.txt
+ * eg. https://nxfifteen.me.uk/api/license/a526bf7ad1/mit/2009-2010/license.txt
  **/
 
 // grab sha from request uri
 $request_uri = explode('/', $_SERVER["REQUEST_URI"]);
+$request_uri = str_replace("/api/license/", "", $request_uri);
 
 $request = array_pop($request_uri);
 // in case there's a trailing slash (unlikely)
