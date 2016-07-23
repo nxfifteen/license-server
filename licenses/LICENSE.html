@@ -1,38 +1,66 @@
-          <article>
-            <div class="row">
-              <div class="span10 offset2">
-                Copyright (c) {{year}} {{copyright}}
-              </div>
+<article>
+    <div class="row">
+        <div class="col-xs-1 col-xs-offset-1">{{gravatar}}</div>
+        <div class="col-xs-10">
+            <div class="stcode_title1">
+                <h3><span class="line"></span><span class="text">{{licensename}} License</span></h3>
+                <p>Copyright (c) {{year}} {{copyright}}</p>
             </div>
-            <div class="row">
-              <div class="span1 offset1">{{gravatar}}</div><div class="span7">
-                <p>Redistribution and use in source and binary forms, with or without modification,
-                are permitted provided that the following conditions are met:</p>
-                <ol>
-                <li>Redistributions of source code must retain the above copyright notice, this
-                list of conditions and the following disclaimer.</li>
+        </div>
+    </div>
 
-                <li>Redistributions in binary form must reproduce the above copyright notice,
-                this list of conditions and the following disclaimer in the documentation
-                and/or other materials provided with the distribution.</li>
-                </ol>
-                <p>THIS SOFTWARE IS PROVIDED BY THE FREEBSD PROJECT "AS IS" AND ANY EXPRESS OR IMPLIED
-                WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
-                AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE FREEBSD
-                PROJECT OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-                EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-                SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-                HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-                OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-                SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="divider_line11" style="padding-top: 20px; margin-bottom: 20px ! important;"></div>
+        </div>
+    </div>
 
-                {{boilerplate}}
-              </div>
-            </div>
-            <div class="row">
-              <div class="span10 offset2">
-                OpenPGP Key ID: <a href="{{pgpurl}}">{{pgpid}}</a> - FingerPrint: {{pgpkey}}<br />
-                <a href="mailto:{{email}}">Email Copyright Holder</a> | Authors Website: <a href="{{primaryurl}}">{{primaryurl}}</a>
-              </div>
-            </div>
-	        </article>
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+
+            <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided
+               that the following conditions are met:</p>
+
+            <ul>
+                <li>Redistributions of source code must retain the above copyright notice, this list of conditions and
+                    the following disclaimer.
+                </li>
+
+                <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions
+                    and the following disclaimer in the documentation and/or other materials provided with the
+                    distribution.
+                </li>
+            </ul>
+
+            <p>THIS SOFTWARE IS PROVIDED BY THE FREEBSD PROJECT "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+               INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+               PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE FREEBSD PROJECT OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+               INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+               PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+               HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+               NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+               POSSIBILITY OF SUCH DAMAGE.</p>
+
+            {{boilerplate}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-2 col-xs-offset-10">
+            <a href="download.md">Download License File</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="divider_line11" style="padding-top: 20px; margin-bottom: 20px ! important;"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-2">
+            OpenPGP Key ID: <a href="{{pgpurl}}">{{pgpid}}</a> - FingerPrint: {{pgpkey}}<br />
+            <a href="mailto:{{email}}">Email Copyright Holder</a> | Authors Website: <a href="{{primaryurl}}">{{primaryurl}}</a>
+        </div>
+    </div>
+</article>

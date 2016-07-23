@@ -1,30 +1,52 @@
-          <article>
-            <div class="row">
-              <div class="span10 offset2">
-                Copyright (c) {{year}} {{copyright}}
-              </div>
+<article>
+    <div class="row">
+        <div class="col-xs-1 col-xs-offset-1">{{gravatar}}</div>
+        <div class="col-xs-10">
+            <div class="stcode_title1">
+                <h3><span class="line"></span><span class="text">{{licensename}} License</span></h3>
+                <p>Copyright (c) {{year}} {{copyright}}</p>
             </div>
-            <div class="row">
-              <div class="span1 offset1">{{gravatar}}</div><div class="span7">
-                <p>Licensed under the Apache License, Version 2.0 (the "License");
-                you may not use this file except in compliance with the License.
-                You may obtain a copy of the License at</p>
+        </div>
+    </div>
 
-                <p><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="divider_line11" style="padding-top: 20px; margin-bottom: 20px ! important;"></div>
+        </div>
+    </div>
 
-                <p>Unless required by applicable law or agreed to in writing, software
-                distributed under the License is distributed on an "AS IS" BASIS,
-                WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-                See the License for the specific language governing permissions and
-                limitations under the License.</p>
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
 
-                {{boilerplate}}
-              </div>
-            </div>
-            <div class="row">
-              <div class="span10 offset2">
-                OpenPGP Key ID: <a href="{{pgpurl}}">{{pgpid}}</a> - FingerPrint: {{pgpkey}}<br />
-                <a href="mailto:{{email}}">Email Copyright Holder</a> | Authors Website: <a href="{{primaryurl}}">{{primaryurl}}</a>
-              </div>
-            </div>
-	        </article>
+            <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
+               compliance with the License. You may obtain a copy of the License at</p>
+
+            <p><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+
+            <p>Unless required by applicable law or agreed to in writing, software distributed under the License is
+               distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+               See the License for the specific language governing permissions and limitations under the License.</p>
+
+            {{boilerplate}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-2 col-xs-offset-10">
+            <a href="download.md">Download License File</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="divider_line11" style="padding-top: 20px; margin-bottom: 20px ! important;"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-2">
+            OpenPGP Key ID: <a href="{{pgpurl}}">{{pgpid}}</a> - FingerPrint: {{pgpkey}}<br />
+            <a href="mailto:{{email}}">Email Copyright Holder</a> | Authors Website: <a href="{{primaryurl}}">{{primaryurl}}</a>
+        </div>
+    </div>
+</article>
